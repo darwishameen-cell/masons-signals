@@ -6,7 +6,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "masons-signals"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "a6c9a4e4-b6ec-4a99-b7cc-e0621434b327"
 migrations_dir = "migrations"
 
 [ai]
