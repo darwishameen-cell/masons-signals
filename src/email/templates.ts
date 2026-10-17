@@ -8,9 +8,9 @@ export interface RenderedEmail {
 }
 
 const DISCLAIMER =
-  'The information provided does not constitute financial advice. We do not manage ' +
-  'client funds or charge for outcomes. Each individual is responsible for their own ' +
-  'trading decisions.';
+  'Forex trading carries substantial risk. Signals are informational and are not ' +
+  'individualized financial advice. You are responsible for your own trading decisions ' +
+  'and losses. No result or profit is guaranteed.';
 
 function escapeHtml(value: string): string {
   return value
@@ -42,27 +42,27 @@ Unsubscribe: ${unsubUrl}`;
 }
 
 export function renderUnderReview(env: Env, unsubUrl: string): RenderedEmail {
-  const bodyText = `We've received your request for access to Mason's Trade.
+  const bodyText = `We've received your request for access to Mason's Signals.
 
 Applications are reviewed before access is granted. You'll hear back from us within roughly 30 hours — no action is needed from you in the meantime.
 
-Mason's Trade`;
-  const bodyHtml = `<p>We've received your request for access to Mason's Trade.</p>
+Mason's Signals`;
+  const bodyHtml = `<p>We've received your request for access to Mason's Signals.</p>
 <p>Applications are reviewed before access is granted. You'll hear back from us within roughly 30 hours &mdash; no action is needed from you in the meantime.</p>
-<p>Mason's Trade</p>`;
-  return { subject: "Your Mason's Trade application", ...wrap(bodyHtml, bodyText, env, unsubUrl) };
+<p>Mason's Signals</p>`;
+  return { subject: "Your Mason's Signals application", ...wrap(bodyHtml, bodyText, env, unsubUrl) };
 }
 
 export function renderApproved(env: Env, unsubUrl: string): RenderedEmail {
   const bodyText = `Your application has been approved.
 
-You'll now receive our market predictions for Forex, commodities and indexes as they're published. Nothing else is required from you.
+You'll now receive our forex-market signals as they're published. Nothing else is required from you.
 
-Mason's Trade`;
+Mason's Signals`;
   const bodyHtml = `<p>Your application has been approved.</p>
-<p>You'll now receive our market predictions for Forex, commodities and indexes as they're published. Nothing else is required from you.</p>
-<p>Mason's Trade</p>`;
-  return { subject: "Your Mason's Trade access is approved", ...wrap(bodyHtml, bodyText, env, unsubUrl) };
+<p>You'll now receive our forex-market signals as they're published. Nothing else is required from you.</p>
+<p>Mason's Signals</p>`;
+  return { subject: "Your Mason's Signals access is approved", ...wrap(bodyHtml, bodyText, env, unsubUrl) };
 }
 
 export function renderTrade(env: Env, trade: Trade, unsubUrl: string): RenderedEmail {
@@ -76,14 +76,14 @@ Entry: ${trade.entry}
 Take profit: ${trade.take_profit}
 Stop loss: ${trade.stop_loss}${noteText}
 
-Mason's Trade`;
+Mason's Signals`;
 
   const bodyHtml = `<p><strong>${escapeHtml(heading)}</strong></p>
 <p>Entry: ${escapeHtml(trade.entry)}<br>
 Take profit: ${escapeHtml(trade.take_profit)}<br>
 Stop loss: ${escapeHtml(trade.stop_loss)}</p>
 ${noteHtml}
-<p>Mason's Trade</p>`;
+<p>Mason's Signals</p>`;
 
   return { subject: `${trade.pair} — ${trade.direction}`, ...wrap(bodyHtml, bodyText, env, unsubUrl) };
 }

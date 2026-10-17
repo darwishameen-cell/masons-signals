@@ -15,7 +15,7 @@ unsubscribe.get('/unsubscribe', async (c: Context<{ Bindings: Env }>) => {
 
   return c.html(
     `<!doctype html><meta charset="utf-8"><title>Unsubscribe</title>
-     <p style="font-family:Helvetica,Arial,sans-serif">Unsubscribe this address from Mason's Trade?</p>
+     <p style="font-family:Helvetica,Arial,sans-serif">Unsubscribe this address from Mason's Signals?</p>
      <form method="POST">
        <button type="submit" style="font-family:Helvetica,Arial,sans-serif;padding:12px 24px">Unsubscribe me</button>
      </form>`,
@@ -30,6 +30,6 @@ unsubscribe.post('/unsubscribe', async (c: Context<{ Bindings: Env }>) => {
   await markUnsubscribed(c.env.DB, subscriber.id);
   return c.html(
     `<!doctype html><meta charset="utf-8"><title>Unsubscribed</title>
-     <p style="font-family:Helvetica,Arial,sans-serif">You've been unsubscribed. You will not receive further emails from Mason's Trade.</p>`,
+     <p style="font-family:Helvetica,Arial,sans-serif">You've been unsubscribed. You will not receive further emails from Mason's Signals.</p>`,
   );
 });

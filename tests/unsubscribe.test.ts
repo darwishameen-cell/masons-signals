@@ -27,13 +27,19 @@ describe('unsubscribe', () => {
     expect(res.status).toBe(200);
     const body = await res.text();
     expect(body).toContain('<form method="POST"');
+    expect(body).toContain("Mason's Signals");
+    expect(body).not.toContain("Mason's Trade");
 
     const row = await env.DB.prepare('SELECT status FROM subscribers').first<any>();
     expect(row.status).toBe('approved');
   });
 
   it('accepts a one-click POST from a mail client', async () => {
-    expect((await call('/unsubscribe?t=tok123', 'POST')).status).toBe(200);
+    const res = await call('/unsubscribe?t=tok123', 'POST');
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain("Mason's Signals");
+    expect(body).not.toContain("Mason's Trade");
     const row = await env.DB.prepare('SELECT status FROM subscribers').first<any>();
     expect(row.status).toBe('unsubscribed');
   });

@@ -50,7 +50,7 @@ describe('POST /subscribe', () => {
     // DRY_RUN redirects the actual "to" to the shared test inbox; that
     // redirection is itself the recipient we can verify sendBatch received.
     expect(payload[0].to).toEqual([(env as any).TEST_INBOX]);
-    expect(payload[0].subject).toBe("Your Mason's Trade application");
+    expect(payload[0].subject).toBe("Your Mason's Signals application");
   });
 
   it('rejects a malformed address with 400', async () => {

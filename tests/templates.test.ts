@@ -14,17 +14,30 @@ const trade: Trade = {
   note: null,
 };
 
+function expectRiskStatement(content: string) {
+  expect(content).toContain('Forex trading carries substantial risk');
+  expect(content).toContain('not individualized financial advice');
+  expect(content).toContain('No result or profit is guaranteed');
+}
+
 describe('templates', () => {
   it('under review email carries subject, disclaimer and unsubscribe link', () => {
     const m = renderUnderReview(env, UNSUB);
-    expect(m.subject).toBe("Your Mason's Trade application");
-    expect(m.text).toContain('does not constitute financial advice');
+    expect(m.subject).toBe("Your Mason's Signals application");
+    expect(m.text).toContain("Mason's Signals");
+    expectRiskStatement(m.text);
     expect(m.html).toContain(UNSUB);
   });
 
-  it('approved email carries subject and unsubscribe link', () => {
+  it('approved email promises forex signals without the old market scope', () => {
     const m = renderApproved(env, UNSUB);
-    expect(m.subject).toBe("Your Mason's Trade access is approved");
+    expect(m.subject).toBe("Your Mason's Signals access is approved");
+    expect(m.text).toContain('forex-market signals');
+    expect(m.text).toContain("Mason's Signals");
+    expect(m.text).not.toContain('commodities');
+    expect(m.text).not.toContain('indexes');
+    expect(m.text).not.toContain("Mason's Trade");
+    expectRiskStatement(m.text);
     expect(m.html).toContain(UNSUB);
   });
 
@@ -34,7 +47,8 @@ describe('templates', () => {
     expect(m.text).toContain('1.0850');
     expect(m.text).not.toContain('1.085\n');
     expect(m.text).toContain('Take profit: 1.0920');
-    expect(m.text).toContain('does not constitute financial advice');
+    expect(m.text).toContain("Mason's Signals");
+    expectRiskStatement(m.text);
     expect(m.html).toContain(UNSUB);
   });
 
@@ -42,14 +56,14 @@ describe('templates', () => {
     const m = renderTrade(env, trade, UNSUB);
     expect(m.text).not.toContain('undefined');
     expect(m.text).not.toContain('null');
-    expect(m.text).toContain('does not constitute financial advice');
+    expectRiskStatement(m.text);
     expect(m.html).toContain(UNSUB);
   });
 
   it('trade email includes the note when present', () => {
     const m = renderTrade(env, { ...trade, note: 'London session only' }, UNSUB);
     expect(m.text).toContain('London session only');
-    expect(m.text).toContain('does not constitute financial advice');
+    expectRiskStatement(m.text);
     expect(m.html).toContain(UNSUB);
   });
 });

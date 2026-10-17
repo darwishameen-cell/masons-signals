@@ -74,7 +74,7 @@ describe('runApprovalSweep', () => {
     const payload = JSON.parse(sendCalls[0][1].body as string);
     expect(payload).toHaveLength(1);
     expect(payload[0].to).toEqual([(env as any).TEST_INBOX]);
-    expect(payload[0].subject).toBe("Your Mason's Trade access is approved");
+    expect(payload[0].subject).toBe("Your Mason's Signals access is approved");
   });
 
   it('approves a subscriber at exactly the 30 hour mark', async () => {
