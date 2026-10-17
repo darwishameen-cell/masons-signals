@@ -3,213 +3,465 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mason's Trade</title>
+<meta name="description" content="Request access to Mason's Signals for structured forex-market signals by email.">
+<title>Mason's Signals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --wine: #4a0d1a;
-    --wine-deep: #26050c;
+  :root {
+    color-scheme: dark;
+    --oxblood: #26050c;
+    --garnet: #4a0d1a;
+    --wine-line: #793044;
     --gold: #c9a227;
-    --gold-bright: #e8c766;
-    --white: #ffffff;
-    --ivory-dim: #cbb0ac;
-    --dim2: #8c7470;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{height:100%;}
-  body{
-    background: radial-gradient(ellipse at 50% 30%, var(--wine) 0%, var(--wine-deep) 75%);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
-    gap: 40px;
-    font-family: 'IBM Plex Mono', monospace;
-    padding: 24px;
-    text-align:center;
+    --signal-gold: #e8c766;
+    --bone: #f5eee5;
+    --muted-rose: #cbb0ac;
+    --quiet: #9d7d7b;
+    --error: #ffb2b7;
   }
 
-  .logo{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+  * { box-sizing: border-box; }
+
+  html {
+    min-width: 320px;
+    background: var(--oxblood);
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    background:
+      linear-gradient(rgba(201, 162, 39, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201, 162, 39, 0.035) 1px, transparent 1px),
+      radial-gradient(circle at 18% 18%, var(--garnet) 0, var(--oxblood) 52%);
+    background-size: 72px 72px, 72px 72px, auto;
+    color: var(--bone);
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  button,
+  input { font: inherit; }
+
+  [hidden] { display: none !important; }
+
+  .page-shell {
+    width: min(1180px, calc(100% - 48px));
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px 0 22px;
+    border-bottom: 1px solid rgba(201, 162, 39, 0.42);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
     gap: 14px;
-    color: var(--gold-bright);
+    color: var(--signal-gold);
   }
-  .logo svg{ width: 64px; height: 64px; }
-  .logo-title{
-    font-family: 'Cormorant Garamond', serif;
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+  }
+
+  .brand-name {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.55rem, 3vw, 2rem);
     font-weight: 600;
-    font-size: clamp(30px, 6vw, 44px);
-    letter-spacing: 0.05em;
-    color: var(--gold);
-    text-align:center;
+    letter-spacing: 0.025em;
   }
 
-  .copy{
-    max-width: 460px;
-    display:flex;
-    flex-direction:column;
-    gap: 10px;
-  }
-  .copy p{
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: clamp(17px, 2.4vw, 21px);
+  .descriptor {
+    max-width: 20rem;
+    color: var(--muted-rose);
+    font-size: 0.78rem;
     line-height: 1.5;
-    color: var(--ivory-dim);
-  }
-  .copy p.leverage{
-    color: var(--gold-bright);
+    text-align: right;
   }
 
-  button{
-    background: #000;
-    color: var(--white);
-    border: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+    align-items: center;
+    gap: clamp(52px, 8vw, 112px);
+    padding: clamp(64px, 10vh, 116px) 0;
+  }
+
+  .intro { max-width: 720px; }
+
+  h1 {
+    max-width: 13ch;
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(3.7rem, 8vw, 7.4rem);
     font-weight: 500;
-    padding: 20px 52px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  button:hover{ background: #1a1a1a; }
-  button:focus-visible{
-    outline: 2px solid var(--gold-bright);
-    outline-offset: 3px;
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
   }
 
-  form{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap: 16px;
+  .lead {
+    max-width: 55ch;
+    margin: 32px 0 0;
+    color: var(--muted-rose);
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.25rem, 2.1vw, 1.6rem);
+    line-height: 1.45;
   }
-  input[type="email"]{
-    background: rgba(0,0,0,0.25);
-    border: 1px solid #7a3040;
-    color: #ede7d9;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    padding: 16px 20px;
-    outline: none;
-    min-width: 280px;
-    text-align:center;
+
+  .signal-anatomy {
+    margin: 48px 0 0;
+    border-top: 1px solid var(--wine-line);
+    border-bottom: 1px solid var(--wine-line);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
   }
-  input[type="email"]::placeholder{ color: #a06b74; }
-  input[type="email"]:focus-visible{
-    outline: 2px solid var(--gold-bright);
-    outline-offset: 2px;
+
+  .signal-field {
+    min-width: 0;
+    padding: 18px 16px 18px 0;
   }
-  .form-success{
-    display:none;
-    max-width: 380px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-    color: var(--gold-bright);
+
+  .signal-field + .signal-field {
+    padding-left: 16px;
+    border-left: 1px solid var(--wine-line);
   }
-  .form-error{
-    display:none;
-    max-width: 380px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-    color: #e5989b;
+
+  .signal-key {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--quiet);
+    font-size: 0.68rem;
+    line-height: 1.35;
   }
-  .disclaimer{
-    max-width: 420px;
-    font-size: 11px;
+
+  .signal-value {
+    display: block;
+    color: var(--signal-gold);
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .access-panel {
+    position: relative;
+    padding: 8px 0 8px clamp(28px, 4vw, 56px);
+    border-left: 1px solid rgba(201, 162, 39, 0.64);
+  }
+
+  .access-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -3px;
+    width: 5px;
+    height: 56px;
+    background: var(--signal-gold);
+  }
+
+  .access-panel h2 {
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .panel-copy {
+    margin: 18px 0 30px;
+    color: var(--muted-rose);
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  form {
+    display: grid;
+    gap: 12px;
+  }
+
+  label {
+    color: var(--bone);
+    font-size: 0.78rem;
+  }
+
+  input[type="email"] {
+    width: 100%;
+    min-height: 52px;
+    border: 1px solid var(--wine-line);
+    border-radius: 0;
+    outline: 0;
+    background: rgba(12, 1, 4, 0.34);
+    color: var(--bone);
+    padding: 14px 16px;
+    font-size: 0.86rem;
+  }
+
+  input[type="email"]::placeholder { color: #956f75; }
+
+  input[type="email"]:focus-visible {
+    border-color: var(--signal-gold);
+    box-shadow: 0 0 0 3px rgba(232, 199, 102, 0.18);
+  }
+
+  input[aria-invalid="true"] { border-color: var(--error); }
+
+  .form-hint,
+  .form-error,
+  .form-success {
+    margin: 0;
+    font-size: 0.72rem;
     line-height: 1.6;
-    letter-spacing: 0.02em;
-    color: var(--dim2);
-    font-family: 'IBM Plex Mono', monospace;
   }
 
-  @media (prefers-reduced-motion: reduce){
-    * { transition: none !important; }
+  .form-hint { color: var(--quiet); }
+  .form-error { color: var(--error); }
+
+  .form-success {
+    padding: 18px 0;
+    border-top: 1px solid var(--wine-line);
+    border-bottom: 1px solid var(--wine-line);
+    color: var(--signal-gold);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.25rem;
+  }
+
+  button {
+    min-height: 52px;
+    margin-top: 6px;
+    border: 1px solid var(--signal-gold);
+    border-radius: 0;
+    background: var(--signal-gold);
+    color: var(--oxblood);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  button:hover:not(:disabled) {
+    background: transparent;
+    color: var(--signal-gold);
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--bone);
+    outline-offset: 4px;
+  }
+
+  button:disabled {
+    cursor: wait;
+    opacity: 0.64;
+  }
+
+  .risk-note {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 32px;
+    padding: 22px 0 30px;
+    border-top: 1px solid rgba(201, 162, 39, 0.42);
+    color: var(--quiet);
+    font-size: 0.66rem;
+    line-height: 1.65;
+  }
+
+  .risk-title { color: var(--muted-rose); }
+
+  .risk-note p {
+    max-width: 94ch;
+    margin: 0;
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  @media (max-width: 820px) {
+    .page-shell { width: min(100% - 32px, 680px); }
+    .masthead { align-items: flex-start; }
+    .descriptor { max-width: 12rem; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 56px;
+      padding: 56px 0;
+    }
+
+    .access-panel {
+      padding: 32px 0 0;
+      border-top: 1px solid rgba(201, 162, 39, 0.64);
+      border-left: 0;
+    }
+
+    .access-panel::before {
+      top: -3px;
+      left: 0;
+      width: 56px;
+      height: 5px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .masthead {
+      display: grid;
+      gap: 12px;
+    }
+
+    .descriptor {
+      max-width: none;
+      text-align: left;
+    }
+
+    h1 { font-size: clamp(3.25rem, 17vw, 5rem); }
+    .signal-anatomy { grid-template-columns: repeat(2, 1fr); }
+
+    .signal-field:nth-child(3) {
+      padding-left: 0;
+      border-top: 1px solid var(--wine-line);
+      border-left: 0;
+    }
+
+    .signal-field:nth-child(4) { border-top: 1px solid var(--wine-line); }
+
+    .risk-note {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>
 </head>
 <body>
+  <div class="page-shell">
+    <header class="masthead">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" stroke="currentColor" aria-hidden="true">
+          <circle cx="24" cy="24" r="21" stroke-width="1"/>
+          <path d="M24 9 L38 34 L10 34 Z" stroke-width="1.1"/>
+          <path d="M24 34 L10 9 L38 9 Z" stroke-width="0.7" opacity="0.6"/>
+          <circle cx="24" cy="24" r="6" stroke-width="1"/>
+        </svg>
+        <span class="brand-name">Mason's Signals</span>
+      </div>
+      <div class="descriptor">Structured forex-market signals, delivered by email.</div>
+    </header>
 
-  <div class="logo">
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor">
-      <circle cx="24" cy="24" r="21" stroke-width="1"/>
-      <path d="M24 9 L38 34 L10 34 Z" stroke-width="1.1"/>
-      <path d="M24 34 L10 9 L38 9 Z" stroke-width="0.7" opacity="0.6"/>
-      <circle cx="24" cy="24" r="6" stroke-width="1"/>
-    </svg>
-    <span class="logo-title">Mason's Trade</span>
+    <main class="hero">
+      <section class="intro" aria-labelledby="page-title">
+        <h1 id="page-title">The trade, without the noise.</h1>
+        <p class="lead">Request access to receive clear forex setups with the pair, direction, entry, take profit and stop loss laid out in one message.</p>
+
+        <div class="signal-anatomy" aria-label="Information included in each signal">
+          <div class="signal-field">
+            <span class="signal-key">Market</span>
+            <span class="signal-value">Forex pair</span>
+          </div>
+          <div class="signal-field">
+            <span class="signal-key">Direction</span>
+            <span class="signal-value">Buy or sell</span>
+          </div>
+          <div class="signal-field">
+            <span class="signal-key">Entry</span>
+            <span class="signal-value">Exact price</span>
+          </div>
+          <div class="signal-field">
+            <span class="signal-key">Risk levels</span>
+            <span class="signal-value">Target + stop</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="access-panel" aria-labelledby="access-title">
+        <h2 id="access-title">Join the signal list</h2>
+        <p class="panel-copy">Access is reviewed before signals are sent. Enter the email address where you want to receive them.</p>
+
+        <form id="waitlistForm" novalidate>
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="trader@example.com" required autocomplete="email" aria-describedby="formHint formError">
+          <input class="honeypot" type="text" id="subscribe_hp" name="subscribe_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="form-hint" id="formHint">Requests are reviewed. If approved, you'll hear from us by email.</p>
+          <p class="form-error" id="formError" role="alert" hidden></p>
+          <button type="submit" id="submitBtn">Request access</button>
+        </form>
+        <p class="form-success" id="formSuccess" role="status" aria-live="polite" hidden></p>
+      </section>
+    </main>
+
+    <footer class="risk-note">
+      <span class="risk-title">Before you trade</span>
+      <p>Forex trading carries substantial risk. Signals are informational and are not individualized financial advice. You are responsible for your own trading decisions and losses. No result or profit is guaranteed.</p>
+    </footer>
   </div>
 
-  <div class="copy">
-    <p>We send market predictions for Forex, commodities, and indexes.</p>
-    <p class="leverage">Our predictions work with a hundred x leverage only.</p>
-  </div>
-
-  <form id="waitlistForm">
-    <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email">
-    <input type="text" id="subscribe_hp" name="subscribe_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-    <button type="submit" id="submitBtn">Request access</button>
-  </form>
-  <p class="form-success" id="formSuccess">Your request has been received.</p>
-  <p class="form-error" id="formError" role="alert"></p>
-
-  <p class="disclaimer">The information provided does not constitute financial advice. We do not manage client funds or charge for outcomes. Each individual is responsible for their own trading decisions.</p>
-
-  <script>
-    // ENDPOINT is a placeholder until the Worker is deployed (Task 14).
-    const ENDPOINT = 'https://masons-trade.<your-subdomain>.workers.dev/subscribe';
+  <script type="module">
+    import { submitSignup } from './signup.js';
 
     const form = document.getElementById('waitlistForm');
+    const emailInput = document.getElementById('email');
+    const honeypot = document.getElementById('subscribe_hp');
     const success = document.getElementById('formSuccess');
-    const errorEl = document.getElementById('formError');
-    const submitBtn = document.getElementById('submitBtn');
+    const error = document.getElementById('formError');
+    const submitButton = document.getElementById('submitBtn');
 
-    form.addEventListener('submit', async function(e){
-      e.preventDefault();
-      const emailInput = document.getElementById('email');
-      if(!emailInput.checkValidity()){
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!emailInput.checkValidity()) {
+        emailInput.reportValidity();
         emailInput.focus();
         return;
       }
 
-      errorEl.style.display = 'none';
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
+      error.hidden = true;
+      emailInput.removeAttribute('aria-invalid');
+      form.setAttribute('aria-busy', 'true');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending request…';
 
-      try {
-        const res = await fetch(ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: emailInput.value,
-            subscribe_hp: document.getElementById('subscribe_hp').value
-          })
-        });
+      const result = await submitSignup({
+        email: emailInput.value,
+        honeypot: honeypot.value,
+      });
 
-        if (res.ok) {
-          form.style.display = 'none';
-          success.style.display = 'block';
-          return;
-        }
+      form.removeAttribute('aria-busy');
+      submitButton.disabled = false;
+      submitButton.textContent = 'Request access';
 
-        const body = await res.json().catch(() => ({}));
-        errorEl.textContent = body.error || 'Something went wrong. Please try again.';
-        errorEl.style.display = 'block';
-      } catch (err) {
-        errorEl.textContent = 'Could not reach the server. Please try again.';
-        errorEl.style.display = 'block';
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Request access';
+      if (result.ok) {
+        form.hidden = true;
+        success.textContent = result.message;
+        success.hidden = false;
+        return;
       }
+
+      emailInput.setAttribute('aria-invalid', 'true');
+      error.textContent = result.error;
+      error.hidden = false;
     });
   </script>
-
 </body>
 </html>
