@@ -1,4 +1,4 @@
-# Mason's Trade — automation backend
+# Mason's Signals — forex signal delivery
 
 All project instructions live in [`CLAUDE.md`](CLAUDE.md). Read that file first — it is the
 single source of truth and is kept up to date.

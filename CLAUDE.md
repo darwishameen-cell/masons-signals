@@ -1,10 +1,10 @@
-# Mason's Trade — automation backend
+# Mason's Signals — forex signal delivery
 
-Backend for a Forex/commodities/indexes signal list. Two jobs: onboard email signups from
+Website and backend for a forex signal list. Two jobs: onboard email signups from
 the marketing site, and broadcast trades that the operator posts from his phone.
 
-The marketing site is built and hosted separately by its owner. This repo is backend only
-and connects to the site through one endpoint URL.
+The marketing site in `site/` and the Hono API deploy together as one Cloudflare Worker. The
+signup client posts to the same-origin `/subscribe` route.
 
 **Full design:** [`docs/superpowers/specs/2026-08-03-masons-trade-automation-design.md`](docs/superpowers/specs/2026-08-03-masons-trade-automation-design.md).
 Read it before changing behaviour — it records *why* the non-obvious decisions were made.
@@ -88,11 +88,11 @@ know which half of it you can actually do.
 **You can do these yourself:**
 
 - `npm install`, `npm test` (expect 158 passing), `npm run typecheck`
-- Create the D1 database (`npx wrangler d1 create masons-trade`) and put the printed
+- Create the D1 database (`npx wrangler d1 create masons-signals`) and put the printed
   `database_id` into `wrangler.toml`
 - Apply migrations (`npm run migrate:remote`)
 - Store secrets with `wrangler secret put` — **once the human has given you the values**
-- Edit the `[vars]` in `wrangler.toml` and the `ENDPOINT` constant in `site/index.html`
+- Edit the public `[vars]` in `wrangler.toml`; store `TEST_INBOX` as a Worker secret
 - `npm run deploy`, register the Telegram webhook, and `npx wrangler tail` to debug
 
 **You cannot do these. Ask the human and wait — do not improvise a substitute:**

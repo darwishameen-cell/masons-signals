@@ -1,16 +1,19 @@
-name = "masons-trade"
+name = "masons-signals"
 main = "src/index.ts"
 compatibility_date = "2026-08-01"
 compatibility_flags = ["nodejs_compat"]
 
 [[d1_databases]]
 binding = "DB"
-database_name = "masons-trade"
-database_id = "96ffc4f8-659c-4189-ad57-bb99a2749528"
+database_name = "masons-signals"
+database_id = "00000000-0000-0000-0000-000000000000"
 migrations_dir = "migrations"
 
 [ai]
 binding = "AI"
+
+[assets]
+directory = "./site"
 
 # Request-level rate limit, enforced at the edge before the handler runs.
 # The per-IP signup counter in D1 protects list quality; this protects cost,
@@ -27,9 +30,7 @@ crons = ["*/15 * * * *"]
 
 [vars]
 DRY_RUN = "true"
-SITE_ORIGIN = "https://masonstrade.com"
-FROM_EMAIL = "Mason's Trade <noreply@masonstrade.com>"
-# Test-only inbox: while DRY_RUN is "true", EVERY email is redirected here
-# instead of the real recipient. Set this to your own address before testing -
-# nothing will reach you until you do. See SETUP.md.
-TEST_INBOX = "set-me@example.com"
+SITE_ORIGIN = "https://masonssignals.com"
+FROM_EMAIL = "Mason's Signals <noreply@masonssignals.com>"
+# TEST_INBOX is a Worker secret. While DRY_RUN is "true", every email is
+# redirected there instead of to the requested subscriber. See SETUP.md.

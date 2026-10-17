@@ -15,14 +15,14 @@ image-based layout — required for screen readers, and preferred by spam filter
 
 Sent immediately on signup.
 
-**Subject:** Your Mason's Trade application
+**Subject:** Your Mason's Signals application
 
-> We've received your request for access to Mason's Trade.
+> We've received your request for access to Mason's Signals.
 >
 > Applications are reviewed before access is granted. You'll hear back from us within
 > roughly 30 hours — no action is needed from you in the meantime.
 >
-> Mason's Trade
+> Mason's Signals
 
 ---
 
@@ -30,14 +30,14 @@ Sent immediately on signup.
 
 Sent by the cron sweep, 30 hours after signup.
 
-**Subject:** Your Mason's Trade access is approved
+**Subject:** Your Mason's Signals access is approved
 
 > Your application has been approved.
 >
-> You'll now receive our market predictions for Forex, commodities and indexes as they're
-> published. Nothing else is required from you.
+> You'll now receive our forex-market signals as they're published. Nothing else is required
+> from you.
 >
-> Mason's Trade
+> Mason's Signals
 
 ---
 
@@ -55,7 +55,7 @@ Sent to every approved subscriber when the operator confirms a trade.
 >
 > {NOTE — omitted entirely when empty}
 >
-> Mason's Trade
+> Mason's Signals
 
 Fields are laid out one per line rather than in a table: it reads correctly in every mail
 client, degrades cleanly to plain text, and is read out sensibly by a screen reader.
@@ -66,11 +66,11 @@ client, degrades cleanly to plain text, and is read out sensibly by a screen rea
 
 Appears on all three. The disclaimer is the wording already used on the site.
 
-> The information provided does not constitute financial advice. We do not manage client
-> funds or charge for outcomes. Each individual is responsible for their own trading
-> decisions.
+> Forex trading carries substantial risk. Signals are informational and are not individualized
+> financial advice. You are responsible for your own trading decisions and losses. No result or
+> profit is guaranteed.
 >
-> You're receiving this because you requested access at masonstrade.com.
+> You're receiving this because you requested access at masonssignals.com.
 > [Unsubscribe]({UNSUBSCRIBE_URL})
 
 The unsubscribe link is unique per subscriber and must appear on every send, alongside the

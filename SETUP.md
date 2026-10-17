@@ -1,4 +1,4 @@
-# Setup — connecting Mason's Trade
+# Setup — connecting Mason's Signals
 
 Everything in this repo is built and tested. What remains is connecting it to real accounts.
 Work through this in order; each step depends on the one before.
@@ -36,13 +36,12 @@ provider will let you authenticate as one.
 Then update `wrangler.toml`:
 
 ```toml
-SITE_ORIGIN = "https://yourdomain.com"
-FROM_EMAIL = "Mason's Trade <noreply@yourdomain.com>"
-TEST_INBOX = "your-own-address@example.com"
+SITE_ORIGIN = "https://masonssignals.com"
+FROM_EMAIL = "Mason's Signals <noreply@masonssignals.com>"
 ```
 
-`TEST_INBOX` is where **every** email goes while `DRY_RUN` is on. Set it to an inbox you can
-actually check — nothing will reach you until you do.
+`TEST_INBOX` is where **every** email goes while `DRY_RUN` is on. Store it as a Worker secret in
+Step 3 so the address is not committed — nothing will reach you until you do.
 
 ---
 
@@ -76,7 +75,7 @@ If you are using **a different Cloudflare account** than the one this was built 
 own database and replace the id:
 
 ```bash
-npx wrangler d1 create masons-trade
+npx wrangler d1 create masons-signals
 ```
 
 Copy the printed `database_id` into `wrangler.toml` under `[[d1_databases]]`, replacing the
@@ -88,13 +87,14 @@ Apply the schema:
 npm run migrate:remote
 ```
 
-Set the four secrets. These are never committed — `wrangler` stores them encrypted:
+Set the five secrets. These are never committed — `wrangler` stores them encrypted:
 
 ```bash
 npx wrangler secret put RESEND_API_KEY
 npx wrangler secret put TELEGRAM_BOT_TOKEN
 npx wrangler secret put TELEGRAM_WEBHOOK_SECRET
 npx wrangler secret put OPERATOR_CHAT_ID
+npx wrangler secret put TEST_INBOX
 ```
 
 For local development instead, copy `.dev.vars.example` to `.dev.vars` and fill it in.
@@ -111,7 +111,7 @@ npm run deploy
 ```
 
 Wrangler prints your Worker URL, something like
-`https://masons-trade.<your-subdomain>.workers.dev`. Keep it; the next two steps need it.
+`https://masons-signals.<your-subdomain>.workers.dev`. Keep it; the next step needs it.
 
 ---
 
@@ -120,24 +120,18 @@ Wrangler prints your Worker URL, something like
 ```bash
 curl -X POST "https://api.telegram.org/bot<TOKEN>/setWebhook" \
   -H "Content-Type: application/json" \
-  -d '{"url":"https://masons-trade.<your-subdomain>.workers.dev/telegram/webhook","secret_token":"<YOUR_WEBHOOK_SECRET>"}'
+  -d '{"url":"https://masons-signals.<your-subdomain>.workers.dev/telegram/webhook","secret_token":"<YOUR_WEBHOOK_SECRET>"}'
 ```
 
 Expect `{"ok":true,"result":true,"description":"Webhook was set"}`.
 
 ---
 
-## Step 6 — Point the site form at the Worker
+## Step 6 — Verify the site and API share one Worker
 
-In `site/index.html`, find:
-
-```js
-const ENDPOINT = 'https://masons-trade.<your-subdomain>.workers.dev/subscribe';
-```
-
-Replace it with your real Worker URL. Then copy that file into the live site — or, if the site
-already exists elsewhere, copy across just the form markup, the `.form-error` CSS rule, and the
-script block. **Nothing else in that file should change**; the styling is the site's own.
+The Worker deploys `site/` as Static Assets and keeps the API routes in the same deployment. Open
+the temporary Worker URL and confirm the Mason's Signals page loads. The form must post to the
+relative `/subscribe` path; there is no separate endpoint constant or second hosting project.
 
 ---
 
@@ -152,7 +146,7 @@ of this before turning it off:
 3. **Approval.** Rather than waiting 30 hours, age the row and let the cron catch it:
 
    ```bash
-   npx wrangler d1 execute masons-trade --remote --command "UPDATE subscribers SET created_at = created_at - 200000000"
+   npx wrangler d1 execute masons-signals --remote --command "UPDATE subscribers SET created_at = created_at - 200000000"
    ```
 
    Within 15 minutes the "approved" email should arrive.
@@ -233,7 +227,7 @@ record again.
 ```bash
 npx wrangler tail                                    # live Worker logs
 curl "https://api.telegram.org/bot<TOKEN>/getWebhookInfo"   # webhook status and last error
-npx wrangler d1 execute masons-trade --remote --command "SELECT status, COUNT(*) FROM subscribers GROUP BY status"
+npx wrangler d1 execute masons-signals --remote --command "SELECT status, COUNT(*) FROM subscribers GROUP BY status"
 ```
 
 Bot silent? Check `getWebhookInfo` for `last_error_message`, and confirm `OPERATOR_CHAT_ID`

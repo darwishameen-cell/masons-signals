@@ -1,4 +1,4 @@
-MASON'S TRADE - WHAT YOU NEED TO DO
+MASON'S SIGNALS - WHAT YOU NEED TO DO
 
 
 This file is plain text on purpose, so it reads cleanly with a screen reader.
@@ -23,9 +23,9 @@ THREE THINGS TO GET FIRST
 
 You cannot start without these three.
 
-Number one. A domain name. Buy it from any registrar. Your emails have to be
-sent from your own domain, otherwise they land in spam. There is no way around
-this.
+Number one. The domain is masonssignals dot com. It stays registered at
+GoDaddy and uses Cloudflare for DNS and hosting. Your emails also have to be
+sent from this verified domain, otherwise they land in spam.
 
 Number two. An account at resend dot com. The free tier is enough to start.
 Add your domain there. It will give you DNS records. Paste those at your
@@ -44,9 +44,10 @@ HOW TO SET IT UP
 Open Claude Code and give it this instruction. You can copy the paragraph
 below exactly.
 
-Clone https://github.com/amirsamidarwish-collab/masons-trade, read CLAUDE.md
-and SETUP.md, and set it up. I have the domain, the Resend API key, the
-Telegram bot token and my chat ID ready. Ask me for them when you need them.
+Clone https://github.com/amirsamidarwish-collab/login-to-email-todatabase-automation-system,
+read CLAUDE.md and SETUP.md, and set it up. I have the domain, the Resend API
+key, the Telegram bot token and my chat ID ready. Ask me for them when you
+need them.
 
 That is the end of the instruction to copy.
 

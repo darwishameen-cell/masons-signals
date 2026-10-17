@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { renderApproved, renderTrade, renderUnderReview } from '../src/email/templates';
 import type { Env, Trade } from '../src/types';
 
-const env = { SITE_ORIGIN: 'https://masonstrade.com' } as Env;
-const UNSUB = 'https://api.masonstrade.com/unsubscribe?t=abc';
+const env = { SITE_ORIGIN: 'https://masonssignals.com' } as Env;
+const UNSUB = 'https://masonssignals.com/unsubscribe?t=abc';
 
 const trade: Trade = {
   pair: 'EURUSD',

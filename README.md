@@ -1,6 +1,6 @@
-# Mason's Trade — automation backend
+# Mason's Signals — forex signal delivery
 
-Backend for a Forex / commodities / indexes signal list. It does two jobs:
+Website and backend for a forex signal list. It does two jobs:
 
 1. **Onboarding.** A visitor submits their email on the marketing site. They immediately get an
    "application under review" email, and 30 hours later an "approved" email. From then on they
@@ -17,13 +17,13 @@ records what must not be "simplified" and why.
 ## Connecting it up
 
 **→ [`SETUP.md`](SETUP.md)** is the step-by-step guide: domain, email provider, Telegram bot,
-deployment, and wiring the site form. Start there.
+deployment, and safe-launch verification. Start there.
 
 ## Stack
 
-Cloudflare Worker + D1 + Cron Triggers. Telegram Bot API for input, Whisper on Workers AI for
-transcription, Resend for email (swappable — see below). Vitest against the real local Workers
-runtime.
+Cloudflare Worker + Static Assets + D1 + Cron Triggers. The same Worker serves the public site and
+API. Telegram Bot API handles input, Whisper on Workers AI handles transcription, and Resend sends
+development email (swappable — see below). Vitest runs against the real local Workers runtime.
 
 ## Layout
 
@@ -37,7 +37,7 @@ runtime.
 | `src/broadcast.ts` | Chunked, resumable send with a per-recipient log |
 | `src/cron.ts` | 30-hour approval sweep + retry sweep for stalled broadcasts |
 | `migrations/` | D1 schema |
-| `site/index.html` | Copy of the marketing page, with the signup form wired up |
+| `site/` | Marketing page and tested same-origin signup client, served as Worker Static Assets |
 | `docs/` | Design spec, implementation plan, email copy drafts |
 
 ## Commands

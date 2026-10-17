@@ -9,7 +9,10 @@ export default defineWorkersConfig({
         wrangler: { configPath: './wrangler.toml' },
         miniflare: {
           compatibilityFlags: ['nodejs_compat'],
-          bindings: { TEST_MIGRATIONS: migrations },
+          bindings: {
+            TEST_INBOX: 'dry-run@example.test',
+            TEST_MIGRATIONS: migrations,
+          },
         },
       },
     },
