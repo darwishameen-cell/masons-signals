@@ -7,6 +7,7 @@
     "deploy": "wrangler deploy",
     "test": "vitest run",
     "verify:site": "vitest run tests/site.test.js",
+    "verify:layout": "node --test tests/site-layout.check.mjs",
     "typecheck": "tsc --noEmit",
     "migrate:local": "wrangler d1 migrations apply masons-signals --local",
     "migrate:remote": "wrangler d1 migrations apply masons-signals --remote"
